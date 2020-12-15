@@ -6,9 +6,8 @@ bcrypt = Bcrypt()
 
 
 def connect_db(app):
-    """Connect this database to provided Flask app.
-
-    You should call this in your Flask app.
+    """Connects this database to app.py
+    Called by app.py (Flask app).
     """
 
     db.app = app
@@ -31,6 +30,11 @@ class User(db.Model):
                            nullable=False)
     last_name = db.Column(db.String(30),
                           nullable=False)
+    notes = db.relationship("Note", backref="user")
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     def serialize(self):
         """ Return serialized user """
@@ -64,3 +68,18 @@ class User(db.Model):
             return db_user
         else:
             return False
+
+
+class Note(db.Model):
+    """ Note class for db access. """
+    __tablename__ = "notes"
+    id = db.Column(db.Integer,
+                   autoincrement=True,
+                   primary_key=True)
+    title = db.Column(db.String(100),
+                      nullable=False)
+    content = db.Column(db.Text,
+                        nullable=False)
+    owner = db.Column(db.String(20),
+                      db.ForeignKey("users.username"),
+                      nullable=False)

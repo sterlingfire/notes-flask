@@ -27,7 +27,7 @@
             </li>
             {% if "user_id" in session %}
                 <li class="nav-item"><a class="nav-link" href="/secret">Secret</a></li>
-                <li class="nav-item"><a href="/logout">Logout</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-outline-warning" href="/logout">Logout</a></li>
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
@@ -38,7 +38,7 @@
 
     <main>
         <div class="jumbotron">
-            <h1 class="display-3">Notes:</h1>
+            <h1 class="display-3">{{title}}:</h1>
             <div class="card col-10">
                 {% for msg in get_flashed_messages() %}
                     <div class="alert-danger alert">{{ msg }}</div>

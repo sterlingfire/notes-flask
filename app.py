@@ -51,7 +51,7 @@ def register_user():
         session["user_id"] = form.username.data
         return redirect("/secret")
     else:
-        return render_template("register.html", form=form)
+        return render_template("register.html", form=form, title="Register")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -73,16 +73,18 @@ def login_user():
         else:
             form.username.errors = ["Bad username/password"]
 
-    return render_template("login.html", form=form)
+    return render_template("login.html", form=form, title="Login")
 
 
-@app.route("/secret")
-def you_made_it():
+@app.route("/users/<username>")
+def you_made_it(username):
     """ Secret user page  """
 
-    if session["user_id"]:
-        return "You made it!"
-
+    if session["user_id"] == username:
+        user = User.query.get_or_404(username)
+        return render_template("user_details.html",
+                              user=user,
+                              title=f"Welcome {username}")
     return redirect('/login')
 
 
