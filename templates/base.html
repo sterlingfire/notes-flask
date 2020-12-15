@@ -9,17 +9,34 @@
 </head>
 
 <body>
-    <main>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item active"><a href="/">Home</a></li>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Notes App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
             {% if "user_id" in session %}
-                <li class="breadcrumb-item"><a href="/secret">Secret</a></li>
-                <li class="breadcrumb-item"><a href="/logout">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="/secret">Secret</a></li>
+                <li class="nav-item"><a href="/logout">Logout</a></li>
             {% else %}
-                <li class="breadcrumb-item"><a href="/login">Login</a></li>
-                <li class="breadcrumb-item"><a href="/register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
             {% endif %}
-          </ol>
+          </ul>
+        </div>
+      </nav>
+
+    <main>
         <div class="jumbotron">
             <h1 class="display-3">Notes:</h1>
             <div class="card col-10">
