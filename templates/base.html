@@ -12,6 +12,13 @@
     <main>
         <ol class="breadcrumb">
             <li class="breadcrumb-item active"><a href="/">Home</a></li>
+            {% if "user_id" in session %}
+                <li class="breadcrumb-item"><a href="/secret">Secret</a></li>
+                <li class="breadcrumb-item"><a href="/logout">Logout</a></li>
+            {% else %}
+                <li class="breadcrumb-item"><a href="/login">Login</a></li>
+                <li class="breadcrumb-item"><a href="/register">Register</a></li>
+            {% endif %}
           </ol>
         <div class="jumbotron">
             <h1 class="display-3">Notes:</h1>

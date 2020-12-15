@@ -1,27 +1,26 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField
-from wtforms.widgets import PasswordField
+from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email
+from email_validator import validate_email, EmailNotValidError
 
 
-class AddUserForm():
+class AddUserForm(FlaskForm):
     """ User registration form. """
     username = StringField("Username",
-                            validators=[InputRequired()])
-    password = StringField("Password",
-                            widget=PasswordInput(hide_value=True),
-                            validators=[InputRequired()])
+                           validators=[InputRequired()])
+    password = PasswordField("Password",
+                             validators=[InputRequired()])
     first_name = StringField("First name",
-                            validators=[InputRequired()])
+                             validators=[InputRequired()])
     last_name = StringField("Last name",
                             validators=[InputRequired()])
     email = StringField("Email",
                         validators=[InputRequired(), Email()])
 
-class LoginForm():
+
+class LoginForm(FlaskForm):
     """ User login form. """
     username = StringField("Username",
-                            validators=[InputRequired()])
-    password = StringField("Password",
-                            widget=PasswordInput(hide_value=True),
-                            validators=[InputRequired()])
+                           validators=[InputRequired()])
+    password = PasswordField("Password",
+                             validators=[InputRequired()])

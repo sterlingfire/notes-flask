@@ -32,25 +32,25 @@ class User(db.Model):
     last_name = db.Column(db.String(30),
                           nullable=False)
 
-    def serialize():
+    def serialize(self):
         """ Return serialized user """
-        return {"username":self.username,
-                "first_name":first_name,
-                "last_name":last_name,
-                "email":email}
-
+        return {
+            "username": self.username,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email
+        }
 
     @classmethod
     def register(cls, user_data):
         """ Register user with hashed password and return user. """
 
         hashed = bcrypt.generate_password_hash(user_data["password"]).decode("utf8")
-        return (cls(username=user,
-                    password=hashed,
-                    first_name=user_data["first_name"],
-                    last_name=user_data["last_name"],
-                    email=user_data["email"]))
-
+        return cls(username=user_data["username"],
+                   password=hashed,
+                   first_name=user_data["first_name"],
+                   last_name=user_data["last_name"],
+                   email=user_data["email"])
 
     @classmethod
     def authenticate(cls, username, pwd):

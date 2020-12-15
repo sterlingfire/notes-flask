@@ -2,7 +2,7 @@
 
 {% block bigcontent %}
 
-<form action="/register" id="register_user_form" method="POST">
+<form action="/login" id="login_user_form" method="POST">
     {{ form.hidden_tag() }}
 
     {% for field in form
@@ -16,7 +16,7 @@
         {% endfor %}
     </div>
     {% endfor %}
-
+    <a class="btn btn-link" href="/register">Sign Up</a>
     <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 
