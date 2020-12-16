@@ -22,7 +22,7 @@ toolbar = DebugToolbarExtension(app)
 @app.route("/")
 def show_index():
     """ Redirects to /register. """
-    return redirect("/register")
+    return redirect("/login")
 
 
 @app.route("/register", methods=["GET", "POST"])
