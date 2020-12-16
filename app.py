@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
+from models import db, connect_db, User, Note
 from forms import AddUserForm, LoginForm
 
 app = Flask(__name__)
@@ -49,7 +49,7 @@ def register_user():
         db.session.add(new_user)
         db.session.commit()
         session["user_id"] = form.username.data
-        return redirect("/secret")
+        return redirect(f"/users/{new_user.username}")
     else:
         return render_template("register.html", form=form, title="Register")
 
@@ -69,7 +69,7 @@ def login_user():
         )
         if user:
             session["user_id"] = form.username.data
-            return redirect("/secret")
+            return redirect(f"/users/{user.username}")
         else:
             form.username.errors = ["Bad username/password"]
 
@@ -96,3 +96,28 @@ def logout_user():
 
     flash("User was successfully logged out")
     return redirect("/")
+
+
+@app.route("/users/<username>/delete", methods=["POST"])
+def delete_user(username):
+    """ Delete a user from the database
+        Delete all notes for user and clear the session
+     """
+
+    user_notes = Note.query.filter_by(owner=username)
+    user_notes.delete()
+    User.query.filter_by(username=username).delete()
+    db.session.commit()
+
+    session.pop("user_id", None)
+
+    flash(f"User: {username} has been deleted.")
+    return redirect("/")
+
+
+@app.route("/users/<username>/notes/add")
+def add_note(username):
+    """ Add a note for the logged in user
+        redirect to users/<username> 
+    """
+

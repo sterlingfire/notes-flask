@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block bigcontent %}
+<form action="/login" id="login_user_form" method="POST">
+  {{ form.hidden_tag() }}
+
+  {% for field in form
+  if field.widget.input_type != 'hidden' %}
+  <div>
+      {{ field.label }}
+      {{ field }}
+
+      {% for error in field.errors %}
+      {{ error }}
+      {% endfor %}
+  </div>
+  {% endfor %}
+  <a class="btn btn-link" href="/register">Sign Up</a>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+{% endblock %}
