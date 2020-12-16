@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{%block header%} Login{% endblock %}
+
 {% block bigcontent %}
 
 <form action="/login" id="login_user_form" method="POST">
@@ -7,7 +9,7 @@
 
     {% for field in form
     if field.widget.input_type != 'hidden' %}
-    <div>
+    <div class="form-group">
         {{ field.label }}
         {{ field }}
 

@@ -38,7 +38,7 @@
 
     <main>
         <div class="jumbotron">
-            <h1 class="display-3">{{title}}:</h1>
+            <h1 class="display-3">{%block header%} {% endblock %}:</h1>
             <div class="card col-10">
                 {% for msg in get_flashed_messages() %}
                     <div class="alert-danger alert">{{ msg }}</div>

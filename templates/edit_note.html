@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{%block header%}Edit note{% endblock %}
+
+{% block bigcontent %}
+<form action="/notes/{{note.id}}/update" id="edit_note_form" method="POST">
+  {{ form.hidden_tag() }}
+
+  {% for field in form
+  if field.widget.input_type != 'hidden' %}
+  <div class="form-group">
+      {{ field.label }}
+      {{ field }}
+
+      {% for error in field.errors %}
+      {{ error }}
+      {% endfor %}
+  </div>
+  {% endfor %}
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+{% endblock %}

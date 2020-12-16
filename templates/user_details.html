@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block header %}Welcome {{user.username}}{% endblock %}
+
 {% block bigcontent %}
     <h2> {{user.full_name}} </h2>
     <h5> Email: {{user.email}} </h5>
