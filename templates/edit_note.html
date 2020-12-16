@@ -3,20 +3,33 @@
 {%block header%}Edit note{% endblock %}
 
 {% block bigcontent %}
+<h3> {{note.title}} </h3>
+<small>by {{note.user.full_name}}</small>
+<p> {{note.content}}</p>
+{% endblock %}
+{% block smallcontent %}
 <form action="/notes/{{note.id}}/update" id="edit_note_form" method="POST">
   {{ form.hidden_tag() }}
 
   {% for field in form
   if field.widget.input_type != 'hidden' %}
-  <div class="form-group">
+  <div class="form-group col-6">
       {{ field.label }}
-      {{ field }}
+      {{ field(class_="form-control") }}
 
       {% for error in field.errors %}
       {{ error }}
       {% endfor %}
   </div>
   {% endfor %}
-  <button class="btn btn-primary" type="submit">Submit</button>
+  <div class="form-group">
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
 </form>
+<div class="form-group">
+    <form method="POST" action="/notes/{{note.id}}/delete">
+        <button type="submit" class="btn btn-danger">Delete note</button>
+    </form>
+
+  </div>
 {% endblock %}

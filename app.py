@@ -114,13 +114,13 @@ def delete_user(username):
     return redirect("/")
 
 
-@app.route("/users/<username>/notes/add")
+@app.route("/users/<username>/notes/add", methods=["GET", "POST"])
 def add_note(username):
     """ Add a note for the logged in user
         redirect to users/<username>
     """
     form = NoteForm()
-    user = User.get_or_404(username)
+    user = User.query.get_or_404(username)
     if form.validate_on_submit():
         new_note = Note(owner=username,
                         title=form.title.data,
@@ -128,7 +128,7 @@ def add_note(username):
         user.notes.append(new_note)
         db.session.commit()
         return redirect (f"/users/{username}")
-    return render_template("add_note.html", form=form)
+    return render_template("add_note.html", form=form, user=user)
 
 
 @app.route("/notes/<int:note_id>/update", methods=["GET", "POST"])
@@ -136,20 +136,23 @@ def update_note(note_id):
     """ Update note by noteid.
     """
     note = Note.query.get_or_404(note_id)
-    form = NoteForm()
+    form = NoteForm(obj=note)
     if form.validate_on_submit():
         note.title = form.title.data
         note.content = form.content.data
         db.session.commit()
         return redirect(f"/users/{note.owner}")
-    return render_template("edit_note.html", form=form)
+    return render_template("edit_note.html", form=form, note=note)
 
 
-@app.route("/notes/<int:note_id>/update", methods=["POST"])
+@app.route("/notes/<int:note_id>/delete", methods=["POST"])
 def delete_note(note_id):
     """ Deletes a note.
     """
     note = Note.query.get_or_404(note_id)
     username = note.owner
+    title = note.title
     db.session.delete(note)
+    db.session.commit()
+    flash(f"Deleted Note: {title}")
     return redirect(f"/users/{username}")

@@ -10,10 +10,14 @@
 {% block smallcontent %}
     <h3>Notes:</h3>
     <ul class="list-group">
-        <li class="list-group-item d-flex justify-content-between align-items-center">Stupid test note</li>
         {% for note in user.notes %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <a href="/notes/{{note.id}}/update">{{note.title}}</a>
+        <li class="list-group-item d-flex justify-content-start align-items-center">
+            <form method="POST" action="/notes/{{note.id}}/delete">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fa fa-dumpster-fire"></i></button>
+            </form>
+
+            <a class="btn btn-warning mx-1" href="/notes/{{note.id}}/update"><i class="fa fa-edit"></i></a> {{note.title}}
         </li>
         {% endfor %}
     </ul>

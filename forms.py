@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, TextAreaField
 from wtforms.validators import InputRequired, Email, Length
 from email_validator import validate_email, EmailNotValidError
 
@@ -27,4 +27,4 @@ class NoteForm(FlaskForm):
     """ Add new Note form. """
     title = StringField("Title",
                         validators=[InputRequired(), Length(max=100)])
-    content = StringField("Content", validators=[InputRequired()])
+    content = TextAreaField("Content", validators=[InputRequired()])
